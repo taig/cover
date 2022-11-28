@@ -7,19 +7,19 @@ name: CI
     - main
 jobs:
   lint:
-    name: Fatal warnings and code formatting
+    name: Lint
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
     - name: Setup Java JDK
       uses: actions/setup-java@v3
       with:
         cache: sbt
         distribution: temurin
         java-version: '17'
-    - name: Checkout
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
     - name: Workflows
       run: sbt -Dmode=ci blowoutCheck
     - name: Code formatting

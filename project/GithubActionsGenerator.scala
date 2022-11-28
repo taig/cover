@@ -24,11 +24,11 @@ object GithubActionsGenerator {
 
   object Job {
     def lint(javaVersion: String): Json = Json.obj(
-      "name" := "Fatal warnings and code formatting",
+      "name" := "Lint",
       "runs-on" := "ubuntu-latest",
       "steps" := List(
-        Step.setupJava(javaVersion),
         Step.Checkout,
+        Step.setupJava(javaVersion),
         Json.obj(
           "name" := "Workflows",
           "run" := "sbt -Dmode=ci blowoutCheck"
@@ -56,8 +56,8 @@ object GithubActionsGenerator {
         "runs-on" := "ubuntu-latest",
         "needs" := List("lint"),
         "steps" := List(
-          Step.setupJava(javaVersion),
           Step.Checkout,
+          Step.setupJava(javaVersion),
           Json.obj(
             "name" := "Release",
             "run" := "sbt ci-release",
