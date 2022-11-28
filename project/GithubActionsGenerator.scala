@@ -5,8 +5,9 @@ object GithubActionsGenerator {
   object Step {
     def setupJava(version: String): Json = Json.obj(
       "name" := "Setup Java JDK",
-      "uses" := "actions/setup-java@v3.0.0",
+      "uses" := "actions/setup-java@v3",
       "with" := Json.obj(
+        "cache" := "sbt",
         "distribution" := "temurin",
         "java-version" := version
       )
@@ -14,15 +15,10 @@ object GithubActionsGenerator {
 
     val Checkout: Json = Json.obj(
       "name" := "Checkout",
-      "uses" := "actions/checkout@v3.0.0",
+      "uses" := "actions/checkout@v3",
       "with" := Json.obj(
         "fetch-depth" := 0
       )
-    )
-
-    val Cache: Json = Json.obj(
-      "name" := "Cache",
-      "uses" := "coursier/cache-action@v6.3"
     )
   }
 
@@ -33,7 +29,6 @@ object GithubActionsGenerator {
       "steps" := List(
         Step.setupJava(javaVersion),
         Step.Checkout,
-        Step.Cache,
         Json.obj(
           "name" := "Workflows",
           "run" := "sbt -Dmode=ci blowoutCheck"
@@ -41,24 +36,6 @@ object GithubActionsGenerator {
         Json.obj(
           "name" := "Code formatting",
           "run" := "sbt -Dmode=ci scalafmtCheckAll"
-        ),
-        Json.obj(
-          "name" := "Fatal warnings",
-          "run" := "sbt -Dmode=ci +compile"
-        )
-      )
-    )
-
-    def test(javaVersion: String): Json = Json.obj(
-      "name" := "Unit tests",
-      "runs-on" := "ubuntu-latest",
-      "steps" := List(
-        Step.setupJava(javaVersion),
-        Step.Checkout,
-        Step.Cache,
-        Json.obj(
-          "name" := "Tests",
-          "run" := "sbt +test"
         )
       )
     )
@@ -74,15 +51,13 @@ object GithubActionsGenerator {
     ),
     "jobs" := Json.obj(
       "lint" := Job.lint(javaVersion),
-      "test" := Job.test(javaVersion),
       "deploy" := Json.obj(
         "name" := "Deploy",
         "runs-on" := "ubuntu-latest",
-        "needs" := List("test", "lint"),
+        "needs" := List("lint"),
         "steps" := List(
           Step.setupJava(javaVersion),
           Step.Checkout,
-          Step.Cache,
           Json.obj(
             "name" := "Release",
             "run" := "sbt ci-release",
@@ -106,8 +81,7 @@ object GithubActionsGenerator {
       )
     ),
     "jobs" := Json.obj(
-      "lint" := Job.lint(javaVersion),
-      "test" := Job.test(javaVersion)
+      "lint" := Job.lint(javaVersion)
     )
   )
 }
