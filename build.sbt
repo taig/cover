@@ -34,4 +34,6 @@ name := "cover"
 
 organization := "io.taig"
 
+Compile / packageDoc / publishArtifact := false
+
 versionScheme := Some("early-semver")
