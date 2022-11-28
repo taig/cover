@@ -2,7 +2,7 @@
 
 > A Java micro-library that mimics CSS `object-fit: cover` behavior
 
-![Maven Central](https://img.shields.io/maven-central/v/io.taig/cover)
+[![Maven Central](https://img.shields.io/maven-central/v/io.taig/cover)](https://search.maven.org/artifact/io.taig/cover)
 
 This library exposes a single method `Cover.fit(InputStream input, int width, int height)` where `input` must be a valid image source that can be decoded with `ImageIO.read(input)`.
 
@@ -34,6 +34,6 @@ libraryDependencies += "io.taig" % "cover" % "x.y.z"
 
 ### Gradle
 
-```
-"io.taig:cover:x.y.z"
+```groovy
+implementation("io.taig:cover:x.y.z")
 ```
