@@ -17,6 +17,16 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class Cover {
+  /**
+   * Fit the image input into the `width` x `height` box
+   *
+   * @param input An {@link InputStream} of an image source, this method takes care of closing it
+   * @param width
+   * @param height
+   * @return A {@link BufferedImage} that never exceeds the given `width` and `height` dimensions and always obeys
+   * their aspect ratio
+   * @throws IOException If the image can not be decoded
+   */
   public static BufferedImage fit(InputStream input, int width, int height) throws IOException {
     BufferedInputStream bufferedInput = input instanceof BufferedInputStream
       ? (BufferedInputStream) input
@@ -71,7 +81,7 @@ public class Cover {
 
     if(ratioWidth > ratioHeight) {
       croppedWidth = sourceWidth;
-      croppedHeight = (int) Math.ceil(sourceWidth * ( (double) height / (double) width));
+      croppedHeight = (int) Math.ceil(sourceWidth * ((double) height / (double) width));
     } else if(ratioWidth < ratioHeight) {
       croppedWidth = (int) Math.ceil(sourceHeight * ((double) width / (double) height));
       croppedHeight = sourceHeight;
