@@ -16,6 +16,12 @@ _Cover_ is well suited for thumbnail generation but works just as well with larg
 
 ## Installation
 
+### sbt
+
+```sbt
+libraryDependencies += "io.taig" % "cover" % "x.y.z"
+```
+
 ### Maven
 
 ```xml
@@ -26,8 +32,8 @@ _Cover_ is well suited for thumbnail generation but works just as well with larg
 </dependency>
 ```
 
-### sbt
+### Gradle
 
-```sbt
-libraryDependencies += "io.taig" % "cover" % "x.y.z"
+```
+"io.taig:cover:x.y.z"
 ```
