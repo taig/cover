@@ -56,4 +56,8 @@ ObjectFit.of(...)
     <td><img src="/modules/samples/src/main/resources/otter-1.jpg" /></td>
     <td><img src="/modules/samples/src/main/resources/otter-1.result.webp" /></td>
   </tr>
+  <tr>
+    <td><img src="/modules/samples/src/main/resources/otter-2.jpg" /></td>
+    <td><img src="/modules/samples/src/main/resources/otter-2.result.webp" /></td>
+  </tr>
 </table>
