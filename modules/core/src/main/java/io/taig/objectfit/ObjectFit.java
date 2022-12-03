@@ -1,4 +1,4 @@
-package io.taig.cover;
+package io.taig.objectfit;
 
 import com.drew.imaging.ImageProcessingException;
 import com.drew.metadata.Metadata;

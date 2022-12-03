@@ -37,3 +37,14 @@ libraryDependencies += "io.taig" % "cover" % "x.y.z"
 ```groovy
 implementation("io.taig:cover:x.y.z")
 ```
+
+## Samples
+
+```scala
+ObjectFit.of(getClass.getResourceAsStream("/otter-1.jpg"))
+  .mode(ObjectFit.Mode.COVER)
+  .size(250)
+  .format("webp")
+  .write(target("otter-1.result.webp"))
+```
+
