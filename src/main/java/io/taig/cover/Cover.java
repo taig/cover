@@ -23,11 +23,12 @@ public class Cover {
    * @param input An {@link InputStream} of an image source, this method takes care of closing it
    * @param width
    * @param height
+   * @param imageType Type of the result image (see {@link BufferedImage})
    * @return A {@link BufferedImage} that never exceeds the given `width` and `height` dimensions and always obeys
    * their aspect ratio
    * @throws IOException If the image can not be decoded
    */
-  public static BufferedImage fit(InputStream input, int width, int height) throws IOException {
+  public static BufferedImage fit(InputStream input, int width, int height, int imageType) throws IOException {
     BufferedInputStream bufferedInput = input instanceof BufferedInputStream
       ? (BufferedInputStream) input
       : new BufferedInputStream(input);
@@ -76,8 +77,8 @@ public class Cover {
 
     int croppedWidth;
     int croppedHeight;
-    final double ratioWidth = (double )width / (double) sourceWidth;
-    final double ratioHeight = (double )height / (double) sourceHeight;
+    final double ratioWidth = (double) width / (double) sourceWidth;
+    final double ratioHeight = (double) height / (double) sourceHeight;
 
     if(ratioWidth > ratioHeight) {
       croppedWidth = sourceWidth;
@@ -112,7 +113,7 @@ public class Cover {
       scaledImage = croppedImage.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
     }
 
-    final BufferedImage output = new BufferedImage(scaledWidth, scaledHeight, BufferedImage.TYPE_INT_ARGB);
+    final BufferedImage output = new BufferedImage(scaledWidth, scaledHeight, imageType);
     output.getGraphics().drawImage(scaledImage, 0, 0, null);
     return output;
   }

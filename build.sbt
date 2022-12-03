@@ -1,6 +1,7 @@
 val Version = new {
   val Java = "17"
   val MetadataExtractor = "2.18.0"
+  val MUnit = "0.7.29"
 }
 
 enablePlugins(BlowoutYamlPlugin)
@@ -26,6 +27,7 @@ homepage := Some(url("https://github.com/taig/cover/"))
 
 libraryDependencies ++=
   "com.drewnoakes" % "metadata-extractor" % Version.MetadataExtractor ::
+    "org.scalameta" %% "munit" % Version.MUnit % "test" ::
     Nil
 
 licenses := List("MIT" -> url("https://raw.githubusercontent.com/taig/cover/main/LICENSE"))
