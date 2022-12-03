@@ -13,7 +13,7 @@ object Samples extends IOApp.Simple:
   val otter1: IO[Unit] = IO.blocking {
     ObjectFit.of(getClass.getResourceAsStream("/otter-1.jpg"))
       .mode(ObjectFit.Mode.COVER)
-      .size(250)
+      .size(250, 150)
       .format("webp")
       .write(target("otter-1.result.webp"))
   }

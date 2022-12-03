@@ -41,10 +41,19 @@ implementation("io.taig:cover:x.y.z")
 ## Samples
 
 ```scala
-ObjectFit.of(getClass.getResourceAsStream("/otter-1.jpg"))
+ObjectFit.of(...)
   .mode(ObjectFit.Mode.COVER)
-  .size(250)
+  .size(250, 150)
   .format("webp")
-  .write(target("otter-1.result.webp"))
 ```
 
+<table>
+  <tr>
+    <th>Input</th>
+    <th>Output</th>
+  </tr>
+  <tr>
+    <td><img src="/modules/samples/src/main/resources/otter-1.jpg" /></td>
+    <td><img src="/modules/samples/src/main/resources/otter-1.result.webp" /></td>
+  </tr>
+</table>
