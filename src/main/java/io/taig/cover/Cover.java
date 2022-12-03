@@ -32,7 +32,7 @@ public class Cover {
     Metadata metadata;
 
     try {
-      metadata = metadataInput.getMetadata();
+      metadata = metadataInput.getJpegMetadata();
     } catch (ImageProcessingException exception) {
       metadataInput.close();
       throw new IOException("Failed to extract image metadata", exception);
@@ -50,19 +50,26 @@ public class Cover {
 
     if(image == null) throw new IOException("No ImageReader available to decode InputStream");
 
-    final ExifIFD0Directory exif = metadata.getFirstDirectoryOfType(ExifIFD0Directory.class);
-    final JpegDirectory jpeg = metadata.getFirstDirectoryOfType(JpegDirectory.class);
+    BufferedImage rotatedImage;
 
-    AffineTransform transform = null;
+    if(metadata != null) {
+      final ExifIFD0Directory exif = metadata.getFirstDirectoryOfType(ExifIFD0Directory.class);
+      final JpegDirectory jpeg = metadata.getFirstDirectoryOfType(JpegDirectory.class);
 
-    if(exif != null && jpeg != null) {
-      try {
-        final int orientation = exif.getInt(ExifIFD0Directory.TAG_ORIENTATION);
-        transform = getExifTransformation(orientation, jpeg.getImageWidth(), jpeg.getImageHeight());
-      } catch(MetadataException ignored) {}
+      AffineTransform transform = null;
+
+      if(exif != null && jpeg != null) {
+        try {
+          final int orientation = exif.getInt(ExifIFD0Directory.TAG_ORIENTATION);
+          transform = getExifTransformation(orientation, jpeg.getImageWidth(), jpeg.getImageHeight());
+        } catch(MetadataException ignored) {}
+      }
+
+      rotatedImage = transform == null ? image : transformImage(image, transform);
+    } else {
+      rotatedImage = image;
     }
 
-    final BufferedImage rotatedImage = transform == null ? image : transformImage(image, transform);
 
     final int sourceWidth = rotatedImage.getWidth();
     final int sourceHeight = rotatedImage.getHeight();
