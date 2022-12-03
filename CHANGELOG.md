@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.3
+
+_2022-12-03_
+
+* Only extract metadata and perform image rotation for jpgs
+
 ## 0.0.2
 
 _2022-12-03_
