@@ -1,8 +1,8 @@
 # Cover
 
-> A Java micro-library that mimics CSS `object-fit: cover` behavior
+> A Java library that mimics CSS `object-fit` image scaling behavior
 
-[![Maven Central](https://img.shields.io/maven-central/v/io.taig/cover)](https://search.maven.org/artifact/io.taig/cover)
+[![Maven Central](https://img.shields.io/maven-central/v/io.taig/object-fit)](https://search.maven.org/artifact/io.taig/object-fit)
 
 This library exposes a single method `Cover.fit(InputStream input, int width, int height)` where `input` must be a valid image source that can be decoded with `ImageIO.read(input)`.
 
@@ -12,14 +12,14 @@ Unlike `object-fit: cover`, this library won't upscale images that are smaller t
 
 Additionally, this library automatically handles image rotation from JPEG Exif data if available.
 
-_Cover_ is well suited for thumbnail generation but works just as well with larger images.
+_object-fit_ is well suited for thumbnail generation but works just as well with larger images.
 
 ## Installation
 
 ### sbt
 
 ```sbt
-libraryDependencies += "io.taig" % "cover" % "x.y.z"
+libraryDependencies += "io.taig" % "object-fit" % "x.y.z"
 ```
 
 ### Maven
@@ -27,7 +27,7 @@ libraryDependencies += "io.taig" % "cover" % "x.y.z"
 ```xml
 <dependency>
   <groupId>io.taig</groupId>
-  <artifactId>cover</artifactId>
+  <artifactId>object-fit</artifactId>
   <version>x.y.z</version>
 </dependency>
 ```
@@ -35,7 +35,7 @@ libraryDependencies += "io.taig" % "cover" % "x.y.z"
 ### Gradle
 
 ```groovy
-implementation("io.taig:cover:x.y.z")
+implementation("io.taig:object-fit:x.y.z")
 ```
 
 ## Samples
