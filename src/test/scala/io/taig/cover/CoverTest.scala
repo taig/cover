@@ -10,6 +10,7 @@ final class CoverTest extends FunSuite {
   override def beforeAll(): Unit = {
     super.beforeAll()
     System.setProperty("java.awt.headless", "true")
+    ImageIO.scanForPlugins()
     ()
   }
 
@@ -28,7 +29,7 @@ final class CoverTest extends FunSuite {
     result
   }
 
-  test("landscape") {
+  test("jpg (rotated)") {
     val image = Cover.fit(
       getClass.getResourceAsStream("/Landscape_3.jpg"),
       300,
@@ -37,5 +38,16 @@ final class CoverTest extends FunSuite {
     )
 
     assertEquals(obtained = toBytes(image, "jpg").toSeq, expected = loadImage("/Landscape_3.expected.jpg").toSeq)
+  }
+
+  test("webp") {
+    val image = Cover.fit(
+      getClass.getResourceAsStream("/river.webp"),
+      500,
+      300,
+      BufferedImage.TYPE_INT_ARGB
+    )
+
+    assertEquals(obtained = toBytes(image, "webp").toSeq, expected = loadImage("/river.expected.webp").toSeq)
   }
 }

@@ -1,6 +1,5 @@
 package io.taig.cover;
 
-import com.drew.imaging.ImageMetadataReader;
 import com.drew.imaging.ImageProcessingException;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.MetadataException;
@@ -12,7 +11,6 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -29,30 +27,24 @@ public class Cover {
    * @throws IOException If the image can not be decoded
    */
   public static BufferedImage fit(InputStream input, int width, int height, int imageType) throws IOException {
-    BufferedInputStream bufferedInput = input instanceof BufferedInputStream
-      ? (BufferedInputStream) input
-      : new BufferedInputStream(input);
-
-    bufferedInput.mark(8192);
+    MetadataInputStream metadataInput = new MetadataInputStream(input);
 
     Metadata metadata;
 
     try {
-      metadata = ImageMetadataReader.readMetadata(bufferedInput);
+      metadata = metadataInput.getMetadata();
     } catch (ImageProcessingException exception) {
-      bufferedInput.close();
+      metadataInput.close();
       throw new IOException("Failed to extract image metadata", exception);
     }
-
-    bufferedInput.reset();
 
     BufferedImage image;
 
     try {
-      image = ImageIO.read(bufferedInput);
-      bufferedInput.close();
+      image = ImageIO.read(metadataInput);
+      metadataInput.close();
     } catch (Exception exception) {
-      bufferedInput.close();
+      metadataInput.close();
       throw exception;
     }
 

@@ -1,5 +1,6 @@
 val Version = new {
   val Java = "17"
+  val WebpImageIo = "0.1.6"
   val MetadataExtractor = "2.18.0"
   val MUnit = "0.7.29"
 }
@@ -28,6 +29,7 @@ homepage := Some(url("https://github.com/taig/cover/"))
 libraryDependencies ++=
   "com.drewnoakes" % "metadata-extractor" % Version.MetadataExtractor ::
     "org.scalameta" %% "munit" % Version.MUnit % "test" ::
+    "org.sejda.imageio" % "webp-imageio" % Version.WebpImageIo % "test" ::
     Nil
 
 licenses := List("MIT" -> url("https://raw.githubusercontent.com/taig/cover/main/LICENSE"))
