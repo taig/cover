@@ -1,78 +1,19 @@
 package io.taig.cover;
 
-import com.drew.imaging.ImageProcessingException;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.MetadataException;
 import com.drew.metadata.exif.ExifIFD0Directory;
 import com.drew.metadata.jpeg.JpegDirectory;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 
-public class Cover {
-  /**
-   * Fit the image input into the `width` x `height` box
-   *
-   * @param input An {@link InputStream} of an image source, this method takes care of closing it
-   * @param width
-   * @param height
-   * @param imageType Type of the result image (see {@link BufferedImage})
-   * @return A {@link BufferedImage} that never exceeds the given `width` and `height` dimensions and always obeys
-   * their aspect ratio
-   * @throws IOException If the image can not be decoded
-   */
-  public static BufferedImage fit(InputStream input, int width, int height, int imageType) throws IOException {
-    MetadataInputStream metadataInput = new MetadataInputStream(input);
-
-    Metadata metadata;
-
-    try {
-      metadata = metadataInput.getJpegMetadata();
-    } catch (ImageProcessingException exception) {
-      metadataInput.close();
-      throw new IOException("Failed to extract image metadata", exception);
-    }
-
-    BufferedImage image;
-
-    try {
-      image = ImageIO.read(metadataInput);
-      metadataInput.close();
-    } catch (Exception exception) {
-      metadataInput.close();
-      throw exception;
-    }
-
-    if(image == null) throw new IOException("No ImageReader available to decode InputStream");
-
-    BufferedImage rotatedImage;
-
-    if(metadata != null) {
-      final ExifIFD0Directory exif = metadata.getFirstDirectoryOfType(ExifIFD0Directory.class);
-      final JpegDirectory jpeg = metadata.getFirstDirectoryOfType(JpegDirectory.class);
-
-      AffineTransform transform = null;
-
-      if(exif != null && jpeg != null) {
-        try {
-          final int orientation = exif.getInt(ExifIFD0Directory.TAG_ORIENTATION);
-          transform = getExifTransformation(orientation, jpeg.getImageWidth(), jpeg.getImageHeight());
-        } catch(MetadataException ignored) {}
-      }
-
-      rotatedImage = transform == null ? image : transformImage(image, transform);
-    } else {
-      rotatedImage = image;
-    }
-
-
-    final int sourceWidth = rotatedImage.getWidth();
-    final int sourceHeight = rotatedImage.getHeight();
+class Awts {
+  static BufferedImage cover(BufferedImage image, int width, int height, int imageType) {
+    final int sourceWidth = image.getWidth();
+    final int sourceHeight = image.getHeight();
 
     int croppedWidth;
     int croppedHeight;
@@ -90,7 +31,7 @@ public class Cover {
       croppedHeight = sourceHeight;
     }
 
-    final BufferedImage croppedImage = rotatedImage.getSubimage(
+    final BufferedImage croppedImage = image.getSubimage(
       (sourceWidth - croppedWidth) / 2,
       (sourceHeight - croppedHeight) / 2,
       croppedWidth,
@@ -117,7 +58,23 @@ public class Cover {
     return output;
   }
 
-  private static BufferedImage transformImage(BufferedImage image, AffineTransform transform) {
+  static BufferedImage exifRotateImage(BufferedImage image, Metadata metadata) {
+    final ExifIFD0Directory exif = metadata.getFirstDirectoryOfType(ExifIFD0Directory.class);
+    final JpegDirectory jpeg = metadata.getFirstDirectoryOfType(JpegDirectory.class);
+
+    AffineTransform transform = null;
+
+    if(exif != null && jpeg != null) {
+      try {
+        final int orientation = exif.getInt(ExifIFD0Directory.TAG_ORIENTATION);
+        transform = getExifTransformation(orientation, jpeg.getImageWidth(), jpeg.getImageHeight());
+      } catch(MetadataException ignored) {}
+    }
+
+    return transform == null ? image : transformImage(image, transform);
+  }
+
+  static BufferedImage transformImage(BufferedImage image, AffineTransform transform) {
     final AffineTransformOp op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BICUBIC);
     var target = op.createCompatibleDestImage(
       image,
@@ -131,7 +88,7 @@ public class Cover {
     return target;
   }
 
-  private static AffineTransform getExifTransformation(int orientation, int width, int height) {
+  static AffineTransform getExifTransformation(int orientation, int width, int height) {
     final AffineTransform transform = new AffineTransform();
 
     switch(orientation) {
