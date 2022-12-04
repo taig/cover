@@ -26,7 +26,7 @@ object Samples extends IOApp.Simple:
   def two(source: String, destination: String): IO[Unit] = IO.blocking {
     ObjectFit.of(getClass.getResourceAsStream(source))
       .mode(ObjectFit.Mode.COVER)
-      .size(300, 150)
+      .size(250, 150)
       .format("webp")
       .scaleUp()
       .write(target(destination))

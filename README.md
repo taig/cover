@@ -69,7 +69,7 @@ ObjectFit.of(...)
 ```scala
 ObjectFit.of(...)
   .mode(ObjectFit.Mode.COVER)
-  .size(250, 250)
+  .size(250, 150)
   .format("webp")
   .scaleUp()
   ```
