@@ -39,7 +39,7 @@ implementation("io.taig:object-fit:x.y.z")
 ### Cover
 
 ```scala
-ObjectFit.of(...)
+ObjectFit.options()
   .mode(ObjectFit.Mode.COVER)
   .size(250, 150)
   .format("webp")
@@ -67,7 +67,7 @@ ObjectFit.of(...)
 <hr />
 
 ```scala
-ObjectFit.of(...)
+ObjectFit.options()
   .mode(ObjectFit.Mode.COVER)
   .size(250, 150)
   .format("webp")
@@ -88,7 +88,7 @@ ObjectFit.of(...)
 ### Fill
 
 ```scala
-ObjectFit.of(...)
+ObjectFit.options()
   .mode(ObjectFit.Mode.FILL)
   .size(250, 250)
   .format("png")
@@ -116,7 +116,7 @@ ObjectFit.of(...)
 <hr />
 
 ```scala
-ObjectFit.of(...)
+ObjectFit.options()
   .mode(ObjectFit.Mode.FILL)
   .size(250, 250)
   .format("png")
@@ -137,7 +137,7 @@ ObjectFit.of(...)
 ### Contain
 
 ```scala
-ObjectFit.of(...)
+ObjectFit.options()
   .mode(ObjectFit.Mode.CONTAIN)
   .size(250, 250)
   .format("jpg")
@@ -165,7 +165,7 @@ ObjectFit.of(...)
 <hr />
 
 ```scala
-ObjectFit.of(...)
+ObjectFit.options()
   .mode(ObjectFit.Mode.CONTAIN)
   .size(400, 500)
   .format("jpg")

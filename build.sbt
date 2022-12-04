@@ -14,6 +14,7 @@ inThisBuild(
     homepage := Some(url("https://github.com/taig/object-fit/")),
     licenses := List("MIT" -> url("https://raw.githubusercontent.com/taig/object-fit/main/LICENSE")),
     organization := "io.taig",
+    scalaVersion := Version.Scala,
     versionScheme := Some("early-semver")
   )
 )
@@ -32,7 +33,7 @@ lazy val root = project
     },
     name := "object-fit"
   )
-  .aggregate(core)
+  .aggregate(core, samples)
 
 lazy val core = project
   .in(file("modules/core"))
@@ -55,7 +56,6 @@ lazy val samples = project
       "org.sejda.imageio" % "webp-imageio" % Version.WebpImageIo ::
         "org.typelevel" %% "cats-effect" % Version.CatsEffect ::
         Nil,
-    name := "object-fit-samples",
-    scalaVersion := Version.Scala
+    name := "object-fit-samples"
   )
   .dependsOn(core)

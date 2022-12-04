@@ -21,24 +21,24 @@ final class ObjectFitTest extends FunSuite {
   }
 
   test("jpg (rotated)") {
-    val image = ObjectFit
-      .of(getClass.getResourceAsStream("/Landscape_3.jpg"))
+    val options = ObjectFit
+      .options()
       .mode(ObjectFit.Mode.COVER)
       .size(300)
       .format("jpg")
-      .toBytes
+    val image = ObjectFit.toBytes(getClass.getResourceAsStream("/Landscape_3.jpg"), options)
 
     assertEquals(obtained = image.toSeq, expected = loadImage("/Landscape_3.expected.jpg").toSeq)
   }
 
   test("webp") {
-    val image = ObjectFit
-      .of(getClass.getResourceAsStream("/river.webp"))
+    val options = ObjectFit
+      .options()
       .mode(ObjectFit.Mode.COVER)
       .size(500, 300)
       .format("webp")
       .imageType(BufferedImage.TYPE_INT_ARGB)
-      .toBytes
+    val image = ObjectFit.toBytes(getClass.getResourceAsStream("/river.webp"), options)
 
     assertEquals(obtained = image.toSeq, expected = loadImage("/river.expected.webp").toSeq)
   }
