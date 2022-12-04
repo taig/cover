@@ -26,7 +26,7 @@ class Awts {
       scaledHeight = height;
       scaledImage = image;
     } else {
-      final double ratio = Math.max((double) width / (double) sourceWidth, (double) height / (double) sourceHeight);
+      final double ratio = Math.min((double) width / (double) sourceWidth, (double) height / (double) sourceHeight);
       scaledWidth = (int) (sourceWidth * ratio);
       scaledHeight = (int) (sourceHeight * ratio);
       scaledImage = image.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
