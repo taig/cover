@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.1
+
+_2022-12-04_
+
+* Fix ObjectFit.Mode visibility
+
 ## 0.1.0
 
 _2022-12-04_
