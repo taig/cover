@@ -22,9 +22,9 @@ class Awts {
 
     if(ratioWidth > ratioHeight) {
       croppedWidth = sourceWidth;
-      croppedHeight = (int) Math.ceil(sourceWidth * ((double) height / (double) width));
+      croppedHeight = (int) (sourceWidth * ((double) height / (double) width));
     } else if(ratioWidth < ratioHeight) {
-      croppedWidth = (int) Math.ceil(sourceHeight * ((double) width / (double) height));
+      croppedWidth = (int) (sourceHeight * ((double) width / (double) height));
       croppedHeight = sourceHeight;
     } else {
       croppedWidth = sourceWidth;
@@ -48,8 +48,8 @@ class Awts {
       scaledImage = croppedImage;
     } else {
       final double ratio = Math.max((double) width / (double) croppedWidth, (double) height / (double) croppedHeight);
-      scaledWidth = (int) Math.ceil(croppedWidth * ratio);
-      scaledHeight = (int) Math.ceil(croppedHeight * ratio);
+      scaledWidth = (int) (croppedWidth * ratio);
+      scaledHeight = (int) (croppedHeight * ratio);
       scaledImage = croppedImage.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
     }
 
