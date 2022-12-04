@@ -4,11 +4,7 @@
 
 [![Maven Central](https://img.shields.io/maven-central/v/io.taig/object-fit)](https://search.maven.org/artifact/io.taig/object-fit)
 
-This library exposes a single method `Cover.fit(InputStream input, int width, int height)` where `input` must be a valid image source that can be decoded with `ImageIO.read(input)`.
-
-Like CSS' `object-fit: cover`, the returned `BufferedImage` will always obey the aspect ratio of the given `width` and `height` parameters. If the given image is larger, it will be down-scaled and cropped (to center) to fit into the given dimensions.
-
-Unlike `object-fit: cover`, this library won't upscale images that are smaller than the given dimensions. It does, however, make sure to crop smaller images into the correct aspect ratio.
+A Java AWT based image scaling library that is inspired by <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit?retiredLocale=de">CSS `object-fit`</a> scaling modes. This library allows to scale images in `cover`, `contain` and `fill` modes, where `cover` mode is the noteworthy feature.
 
 Additionally, this library automatically handles image rotation from JPEG Exif data if available.
 

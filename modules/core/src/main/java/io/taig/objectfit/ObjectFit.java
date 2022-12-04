@@ -46,8 +46,8 @@ public final class ObjectFit {
   /**
    * Set width and height independently
    *
-   * @param width maximum width of the rendered image (default: 500)
-   * @param height maximum height of the rendered image (default: 500)
+   * @param width maximum width of the rendered image (default: {@code 500})
+   * @param height maximum height of the rendered image (default: {@code 500})
    * @see #size(int)
    */
   public ObjectFit size(int width, int height) {
@@ -57,17 +57,28 @@ public final class ObjectFit {
   /**
    * Set width and height to the same dimension to render a square image
    *
-   * @param dimension equal width and height (default: 500)
+   * @param dimension equal width and height (default: {@code 500})
    * @see #size(int, int)
    */
   public ObjectFit size(int dimension) {
     return size(dimension, dimension);
   }
 
+  /**
+   * Set the scaling mode, inspired by CSS `object-fit`
+   *
+   * @param mode scaling mode (default: {@code CONTAIN})
+   * @see <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit">developer.mozilla.org</a>
+   */
   public ObjectFit mode(ObjectFit.Mode mode) {
     return new ObjectFit(input, width, height, mode, format, autoRotateJpg, scaleUp, imageType);
   }
 
+  /**
+   * Set the output image format
+   *
+   * @param format Image format, such as {@code "png"} or {@code "jpg"} (default: {@code "png"})
+   */
   public ObjectFit format(String format) {
     return new ObjectFit(input, width, height, mode, format, autoRotateJpg, scaleUp, imageType);
   }
@@ -80,10 +91,18 @@ public final class ObjectFit {
     return autoRotateJpg(true);
   }
 
+  /**
+   * Whether images that are smaller than the given dimensions should be up-scaled
+   *
+   * @param enabled (default: {@code true})
+   */
   public ObjectFit scaleUp(boolean enabled) {
     return new ObjectFit(input, width, height, mode, format, autoRotateJpg, enabled, imageType);
   }
 
+  /**
+   * @see #scaleUp(boolean)
+   */
   public ObjectFit scaleUp() {
     return scaleUp(true);
   }
