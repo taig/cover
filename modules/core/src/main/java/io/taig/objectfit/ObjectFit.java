@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 
 public final class ObjectFit {
-  enum Mode {
+  public enum Mode {
     CONTAIN, COVER, FILL
   }
 
