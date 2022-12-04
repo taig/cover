@@ -170,7 +170,7 @@ ObjectFit.of(...)
 
 ```scala
 ObjectFit.of(...)
-.mode(ObjectFit.Mode.CONTAIN)
+  .mode(ObjectFit.Mode.CONTAIN)
   .size(400, 500)
   .format("jpg")
   .scaleUp()

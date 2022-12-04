@@ -17,23 +17,14 @@ class Awts {
 
     if(sourceWidth == width && sourceHeight == height) return image;
 
-    int scaledWidth;
-    int scaledHeight;
-    Image scaledImage;
-
-    if(sourceWidth < width && sourceHeight < height) {
-      scaledWidth = width;
-      scaledHeight = height;
-      scaledImage = image;
+    if(!scaleUp && sourceWidth < width && sourceHeight < height) {
+      return image;
     } else {
       final double ratio = Math.min((double) width / (double) sourceWidth, (double) height / (double) sourceHeight);
-      scaledWidth = (int) (sourceWidth * ratio);
-      scaledHeight = (int) (sourceHeight * ratio);
-      scaledImage = image.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
-    }
+      final int scaledWidth = (int) (sourceWidth * ratio);
+      final int scaledHeight = (int) (sourceHeight * ratio);
+      final Image scaledImage = image.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
 
-    if(scaledImage instanceof BufferedImage) return (BufferedImage) scaledImage;
-    else {
       final BufferedImage output = new BufferedImage(scaledWidth, scaledHeight, imageType);
       output.getGraphics().drawImage(scaledImage, 0, 0, null);
       return output;
