@@ -11,6 +11,10 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
 class Awts {
+  static BufferedImage contain(BufferedImage image, int width, int height, int imageType, boolean scaleUp) {
+    return null;
+  }
+
   static BufferedImage cover(BufferedImage image, int width, int height, int imageType, boolean scaleUp) {
     final int sourceWidth = image.getWidth();
     final int sourceHeight = image.getHeight();

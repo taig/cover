@@ -119,7 +119,7 @@ public final class ObjectFit {
     final BufferedImage rotatedImage = metadata != null ? Awts.exifRotateImage(image, metadata) : image;
 
     switch (mode) {
-      case CONTAIN: throw new UnsupportedOperationException();
+      case CONTAIN: return Awts.contain(rotatedImage, width, height, imageType, scaleUp);
       case COVER: return Awts.cover(rotatedImage, width, height, imageType, scaleUp);
       default: return Awts.fill(rotatedImage, width, height, imageType, scaleUp);
     }
