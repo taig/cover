@@ -12,10 +12,13 @@ object Samples extends IOApp.Simple:
     one("/otter.2.jpg", "otter.1.2.result.webp") *>
     one("/otter.3.jpg", "otter.1.3.result.webp") *>
     two("/otter.3.jpg", "otter.2.3.result.webp") *>
-      three("/otter.1.jpg", "otter.3.1.result.webp") *>
-      three("/otter.2.jpg", "otter.3.2.result.webp") *>
-      three("/otter.3.jpg", "otter.3.3.result.webp") *>
-      four("/otter.3.jpg", "otter.4.3.result.webp")
+    three("/otter.1.jpg", "otter.3.1.result.png") *>
+    three("/otter.2.jpg", "otter.3.2.result.png") *>
+    three("/otter.3.jpg", "otter.3.3.result.png") *>
+    four("/otter.3.jpg", "otter.4.3.result.png") *>
+    five("/otter.1.jpg", "otter.5.1.result.jpg")*>
+    five("/otter.2.jpg", "otter.5.2.result.jpg")*>
+    five("/otter.3.jpg", "otter.5.3.result.jpg")
 
   def target(name: String): File = new File(s"./modules/samples/src/main/resources/$name")
 
@@ -50,5 +53,13 @@ object Samples extends IOApp.Simple:
       .size(250, 250)
       .format("png")
       .scaleUp()
+      .write(target(destination))
+  }
+
+  def five(source: String, destination: String): IO[Unit] = IO.blocking {
+    ObjectFit.of(getClass.getResourceAsStream(source))
+      .mode(ObjectFit.Mode.CONTAIN)
+      .size(250, 250)
+      .format("jpg")
       .write(target(destination))
   }

@@ -12,7 +12,32 @@ import java.awt.image.BufferedImage;
 
 class Awts {
   static BufferedImage contain(BufferedImage image, int width, int height, int imageType, boolean scaleUp) {
-    return null;
+    final int sourceWidth = image.getWidth();
+    final int sourceHeight = image.getHeight();
+
+    if(sourceWidth == width && sourceHeight == height) return image;
+
+    int scaledWidth;
+    int scaledHeight;
+    Image scaledImage;
+
+    if(sourceWidth < width && sourceHeight < height) {
+      scaledWidth = width;
+      scaledHeight = height;
+      scaledImage = image;
+    } else {
+      final double ratio = Math.max((double) width / (double) sourceWidth, (double) height / (double) sourceHeight);
+      scaledWidth = (int) (sourceWidth * ratio);
+      scaledHeight = (int) (sourceHeight * ratio);
+      scaledImage = image.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
+    }
+
+    if(scaledImage instanceof BufferedImage) return (BufferedImage) scaledImage;
+    else {
+      final BufferedImage output = new BufferedImage(scaledWidth, scaledHeight, imageType);
+      output.getGraphics().drawImage(scaledImage, 0, 0, null);
+      return output;
+    }
   }
 
   static BufferedImage cover(BufferedImage image, int width, int height, int imageType, boolean scaleUp) {

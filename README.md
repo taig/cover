@@ -103,15 +103,15 @@ ObjectFit.of(...)
   </tr>
   <tr>
     <td><img src="/modules/samples/src/main/resources/otter.1.jpg" /></td>
-    <td><img src="/modules/samples/src/main/resources/otter.3.1.result.webp" /></td>
+    <td><img src="/modules/samples/src/main/resources/otter.3.1.result.png" /></td>
   </tr>
   <tr>
     <td><img src="/modules/samples/src/main/resources/otter.2.jpg" /></td>
-    <td><img src="/modules/samples/src/main/resources/otter.3.2.result.webp" /></td>
+    <td><img src="/modules/samples/src/main/resources/otter.3.2.result.png" /></td>
   </tr>
   <tr>
     <td><img src="/modules/samples/src/main/resources/otter.3.jpg" /></td>
-    <td><img src="/modules/samples/src/main/resources/otter.3.3.result.webp" /></td>
+    <td><img src="/modules/samples/src/main/resources/otter.3.3.result.png" /></td>
   </tr>
 </table>
 
@@ -130,6 +130,34 @@ ObjectFit.of(...)
   </tr>
   <tr>
     <td><img src="/modules/samples/src/main/resources/otter.3.jpg" /></td>
-    <td><img src="/modules/samples/src/main/resources/otter.4.3.result.webp" /></td>
+    <td><img src="/modules/samples/src/main/resources/otter.4.3.result.png" /></td>
+  </tr>
+</table>
+
+### Contain
+
+```scala
+ObjectFit.of(...)
+  .mode(ObjectFit.Mode.CONTAIN)
+  .size(250, 250)
+  .format("jpg")
+```
+
+<table>
+  <tr>
+    <th>Input</th>
+    <th>Output</th>
+  </tr>
+  <tr>
+    <td><img src="/modules/samples/src/main/resources/otter.1.jpg" /></td>
+    <td><img src="/modules/samples/src/main/resources/otter.5.1.result.jpg" /></td>
+  </tr>
+  <tr>
+    <td><img src="/modules/samples/src/main/resources/otter.2.jpg" /></td>
+    <td><img src="/modules/samples/src/main/resources/otter.5.2.result.jpg" /></td>
+  </tr>
+  <tr>
+    <td><img src="/modules/samples/src/main/resources/otter.3.jpg" /></td>
+    <td><img src="/modules/samples/src/main/resources/otter.5.3.result.jpg" /></td>
   </tr>
 </table>
