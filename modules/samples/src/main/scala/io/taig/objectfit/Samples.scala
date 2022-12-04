@@ -11,10 +11,11 @@ object Samples extends IOApp.Simple:
     one("/otter.1.jpg", "otter.1.1.result.webp") *>
     one("/otter.2.jpg", "otter.1.2.result.webp") *>
     one("/otter.3.jpg", "otter.1.3.result.webp") *>
-    two("/otter.3.jpg", "otter.2.1.result.webp") *>
+    two("/otter.3.jpg", "otter.2.3.result.webp") *>
       three("/otter.1.jpg", "otter.3.1.result.webp") *>
       three("/otter.2.jpg", "otter.3.2.result.webp") *>
-      three("/otter.3.jpg", "otter.3.3.result.webp")
+      three("/otter.3.jpg", "otter.3.3.result.webp") *>
+      four("/otter.3.jpg", "otter.4.3.result.webp")
 
   def target(name: String): File = new File(s"./modules/samples/src/main/resources/$name")
 
@@ -40,5 +41,14 @@ object Samples extends IOApp.Simple:
       .mode(ObjectFit.Mode.FILL)
       .size(250, 250)
       .format("png")
+      .write(target(destination))
+  }
+
+  def four(source: String, destination: String): IO[Unit] = IO.blocking {
+    ObjectFit.of(getClass.getResourceAsStream(source))
+      .mode(ObjectFit.Mode.FILL)
+      .size(250, 250)
+      .format("png")
+      .scaleUp()
       .write(target(destination))
   }

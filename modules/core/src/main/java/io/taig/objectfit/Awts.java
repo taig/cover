@@ -64,14 +64,14 @@ class Awts {
 
     if(imageWidth == width && imageHeight == height) return image;
 
-    final int scaledWidth = width >= imageWidth ? width : scaleUp ? width : imageWidth;
-    final int scaledHeight = height >= imageHeight ? height : scaleUp ? height : imageHeight;
+    final int scaledWidth = width >= imageWidth ? scaleUp ? width : imageWidth : width;
+    final int scaledHeight = height >= imageHeight ? scaleUp ? height : imageHeight : height;
 
     Image scaledImage = image.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
 
     if(scaledImage instanceof BufferedImage) return (BufferedImage) scaledImage;
     else {
-      final BufferedImage output = new BufferedImage(scaledImage.getWidth(null), scaledImage.getHeight(null), imageType);
+      final BufferedImage output = new BufferedImage(scaledWidth, scaledHeight, imageType);
       output.getGraphics().drawImage(scaledImage, 0, 0, null);
       return output;
     }
