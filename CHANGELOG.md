@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.2
+
+_2022-12-04_
+
+* Make ObjectFit.Options public
+
 ## 0.1.1
 
 _2022-12-04_

@@ -22,6 +22,7 @@ inThisBuild(
 lazy val root = project
   .in(file("."))
   .enablePlugins(BlowoutYamlPlugin)
+  .settings(noPublishSettings)
   .settings(
     blowoutGenerators ++= {
       val github = file(".github")
