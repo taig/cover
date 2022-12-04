@@ -64,8 +64,8 @@ class Awts {
 
     if(imageWidth == width && imageHeight == height) return image;
 
-    final int scaledWidth = width < imageWidth && scaleUp ? width : imageWidth;
-    final int scaledHeight = width < imageHeight && scaleUp ? width : imageHeight;
+    final int scaledWidth = width >= imageWidth ? width : scaleUp ? width : imageWidth;
+    final int scaledHeight = height >= imageHeight ? height : scaleUp ? height : imageHeight;
 
     Image scaledImage = image.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
 
