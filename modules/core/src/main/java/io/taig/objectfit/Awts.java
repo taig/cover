@@ -58,6 +58,25 @@ class Awts {
     return output;
   }
 
+  static BufferedImage fill(BufferedImage image, int width, int height, int imageType, boolean scaleUp) {
+    final int imageWidth = image.getWidth();
+    final int imageHeight = image.getHeight();
+
+    if(imageWidth == width && imageHeight == height) return image;
+
+    final int scaledWidth = width < imageWidth && scaleUp ? width : imageWidth;
+    final int scaledHeight = width < imageHeight && scaleUp ? width : imageHeight;
+
+    Image scaledImage = image.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
+
+    if(scaledImage instanceof BufferedImage) return (BufferedImage) scaledImage;
+    else {
+      final BufferedImage output = new BufferedImage(scaledImage.getWidth(null), scaledImage.getHeight(null), imageType);
+      output.getGraphics().drawImage(scaledImage, 0, 0, null);
+      return output;
+    }
+  }
+
   static BufferedImage exifRotateImage(BufferedImage image, Metadata metadata) {
     final ExifIFD0Directory exif = metadata.getFirstDirectoryOfType(ExifIFD0Directory.class);
     final JpegDirectory jpeg = metadata.getFirstDirectoryOfType(JpegDirectory.class);

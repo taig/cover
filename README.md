@@ -84,3 +84,29 @@ ObjectFit.of(...)
     <td><img src="/modules/samples/src/main/resources/otter.2.1.result.webp" /></td>
   </tr>
 </table>
+
+```scala
+ObjectFit.of(getClass.getResourceAsStream(source))
+  .mode(ObjectFit.Mode.FILL)
+  .size(250, 250)
+  .format("png")
+```
+
+<table>
+  <tr>
+    <th>Input</th>
+    <th>Output</th>
+  </tr>
+  <tr>
+    <td><img src="/modules/samples/src/main/resources/otter.1.jpg" /></td>
+    <td><img src="/modules/samples/src/main/resources/otter.3.1.result.webp" /></td>
+  </tr>
+  <tr>
+    <td><img src="/modules/samples/src/main/resources/otter.2.jpg" /></td>
+    <td><img src="/modules/samples/src/main/resources/otter.3.2.result.webp" /></td>
+  </tr>
+  <tr>
+    <td><img src="/modules/samples/src/main/resources/otter.3.jpg" /></td>
+    <td><img src="/modules/samples/src/main/resources/otter.3.3.result.webp" /></td>
+  </tr>
+</table>

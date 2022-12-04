@@ -5,10 +5,11 @@ import com.drew.metadata.Metadata;
 
 import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageOutputStream;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 
-public class ObjectFit {
+public final class ObjectFit {
   enum Mode {
     CONTAIN, COVER, FILL
   }
@@ -120,7 +121,7 @@ public class ObjectFit {
     switch (mode) {
       case CONTAIN: throw new UnsupportedOperationException();
       case COVER: return Awts.cover(rotatedImage, width, height, imageType, scaleUp);
-      default: throw new UnsupportedOperationException();
+      default: return Awts.fill(rotatedImage, width, height, imageType, scaleUp);
     }
   }
 
