@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.0
+
+_2022-12-04_
+
+* Rename to `object-fit` and add more scaling modes
+
 ## 0.0.3
 
 _2022-12-03_
