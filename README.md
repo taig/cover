@@ -68,6 +68,8 @@ ObjectFit.of(...)
   </tr>
 </table>
 
+<hr />
+
 ```scala
 ObjectFit.of(...)
   .mode(ObjectFit.Mode.COVER)
@@ -115,6 +117,8 @@ ObjectFit.of(...)
   </tr>
 </table>
 
+<hr />
+
 ```scala
 ObjectFit.of(...)
   .mode(ObjectFit.Mode.FILL)
@@ -161,6 +165,8 @@ ObjectFit.of(...)
     <td><img src="/modules/samples/src/main/resources/otter.5.3.result.jpg" /></td>
   </tr>
 </table>
+
+<hr />
 
 ```scala
 ObjectFit.of(...)
