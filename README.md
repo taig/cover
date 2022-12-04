@@ -161,3 +161,30 @@ ObjectFit.of(...)
     <td><img src="/modules/samples/src/main/resources/otter.5.3.result.jpg" /></td>
   </tr>
 </table>
+
+```scala
+ObjectFit.of(...)
+.mode(ObjectFit.Mode.CONTAIN)
+  .size(400, 500)
+  .format("jpg")
+  .scaleUp()
+```
+
+<table>
+  <tr>
+    <th>Input</th>
+    <th>Output</th>
+  </tr>
+  <tr>
+    <td><img src="/modules/samples/src/main/resources/otter.1.jpg" /></td>
+    <td><img src="/modules/samples/src/main/resources/otter.6.1.result.jpg" /></td>
+  </tr>
+  <tr>
+    <td><img src="/modules/samples/src/main/resources/otter.2.jpg" /></td>
+    <td><img src="/modules/samples/src/main/resources/otter.6.2.result.jpg" /></td>
+  </tr>
+  <tr>
+    <td><img src="/modules/samples/src/main/resources/otter.3.jpg" /></td>
+    <td><img src="/modules/samples/src/main/resources/otter.6.3.result.jpg" /></td>
+  </tr>
+</table>

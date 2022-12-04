@@ -18,7 +18,10 @@ object Samples extends IOApp.Simple:
     four("/otter.3.jpg", "otter.4.3.result.png") *>
     five("/otter.1.jpg", "otter.5.1.result.jpg")*>
     five("/otter.2.jpg", "otter.5.2.result.jpg")*>
-    five("/otter.3.jpg", "otter.5.3.result.jpg")
+    five("/otter.3.jpg", "otter.5.3.result.jpg") *>
+    six("/otter.1.jpg", "otter.6.1.result.jpg") *>
+    six("/otter.2.jpg", "otter.6.2.result.jpg") *>
+    six("/otter.3.jpg", "otter.6.3.result.jpg")
 
   def target(name: String): File = new File(s"./modules/samples/src/main/resources/$name")
 
@@ -61,5 +64,14 @@ object Samples extends IOApp.Simple:
       .mode(ObjectFit.Mode.CONTAIN)
       .size(250, 250)
       .format("jpg")
+      .write(target(destination))
+  }
+
+  def six(source: String, destination: String): IO[Unit] = IO.blocking {
+    ObjectFit.of(getClass.getResourceAsStream(source))
+      .mode(ObjectFit.Mode.CONTAIN)
+      .size(400, 500)
+      .format("jpg")
+      .scaleUp()
       .write(target(destination))
   }
