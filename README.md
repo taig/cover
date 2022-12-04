@@ -34,11 +34,28 @@ libraryDependencies += "io.taig" % "object-fit" % "x.y.z"
 implementation("io.taig:object-fit:x.y.z")
 ```
 
+## Usage
+
+```java
+import io.taig.object.fit.ObjectFit;
+import java.io.File;
+
+InputStream input = ...
+
+final ObjectFit.Options = ObjectFit.options()
+  .mode(ObjectFit.Mode.COVER)
+  .size(500)
+  .format("jpg");
+
+ObjectFit.toBufferedImage(input, options);
+ObjectFit.write(input, options, ...);
+```
+
 ## Samples
 
 ### Cover
 
-```scala
+```java
 ObjectFit.options()
   .mode(ObjectFit.Mode.COVER)
   .size(250, 150)
@@ -66,7 +83,7 @@ ObjectFit.options()
 
 <hr />
 
-```scala
+```java
 ObjectFit.options()
   .mode(ObjectFit.Mode.COVER)
   .size(250, 150)
@@ -87,7 +104,7 @@ ObjectFit.options()
 
 ### Fill
 
-```scala
+```java
 ObjectFit.options()
   .mode(ObjectFit.Mode.FILL)
   .size(250, 250)
@@ -115,7 +132,7 @@ ObjectFit.options()
 
 <hr />
 
-```scala
+```java
 ObjectFit.options()
   .mode(ObjectFit.Mode.FILL)
   .size(250, 250)
@@ -136,7 +153,7 @@ ObjectFit.options()
 
 ### Contain
 
-```scala
+```java
 ObjectFit.options()
   .mode(ObjectFit.Mode.CONTAIN)
   .size(250, 250)
@@ -164,7 +181,7 @@ ObjectFit.options()
 
 <hr />
 
-```scala
+```java
 ObjectFit.options()
   .mode(ObjectFit.Mode.CONTAIN)
   .size(400, 500)
