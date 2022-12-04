@@ -13,7 +13,7 @@ public final class ObjectFit {
     CONTAIN, COVER, FILL
   }
 
-  static class Options {
+  public static class Options {
     public final int width;
     public final int height;
     public final ObjectFit.Mode mode;
