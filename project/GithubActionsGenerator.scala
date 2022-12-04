@@ -23,6 +23,19 @@ object GithubActionsGenerator {
   }
 
   object Job {
+    def test(javaVersion: String): Json = Json.obj(
+      "name" := "Test",
+      "runs-on" := "ubuntu-latest",
+      "steps" := List(
+        Step.Checkout,
+        Step.setupJava(javaVersion),
+        Json.obj(
+          "name" := "Unit tests",
+          "run" := "sbt -Dmode=ci test"
+        )
+      )
+    )
+
     def lint(javaVersion: String): Json = Json.obj(
       "name" := "Lint",
       "runs-on" := "ubuntu-latest",
@@ -51,10 +64,11 @@ object GithubActionsGenerator {
     ),
     "jobs" := Json.obj(
       "lint" := Job.lint(javaVersion),
+      "test" := Job.test(javaVersion),
       "deploy" := Json.obj(
         "name" := "Deploy",
         "runs-on" := "ubuntu-latest",
-        "needs" := List("lint"),
+        "needs" := List("lint", "test"),
         "steps" := List(
           Step.Checkout,
           Step.setupJava(javaVersion),
@@ -81,7 +95,8 @@ object GithubActionsGenerator {
       )
     ),
     "jobs" := Json.obj(
-      "lint" := Job.lint(javaVersion)
+      "lint" := Job.lint(javaVersion),
+      "test" := Job.test(javaVersion)
     )
   )
 }

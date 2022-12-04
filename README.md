@@ -1,25 +1,21 @@
 # Cover
 
-> A Java micro-library that mimics CSS `object-fit: cover` behavior
+> A Java library that mimics CSS `object-fit` image scaling behavior
 
-[![Maven Central](https://img.shields.io/maven-central/v/io.taig/cover)](https://search.maven.org/artifact/io.taig/cover)
+[![Maven Central](https://img.shields.io/maven-central/v/io.taig/object-fit)](https://search.maven.org/artifact/io.taig/object-fit)
 
-This library exposes a single method `Cover.fit(InputStream input, int width, int height)` where `input` must be a valid image source that can be decoded with `ImageIO.read(input)`.
-
-Like CSS' `object-fit: cover`, the returned `BufferedImage` will always obey the aspect ratio of the given `width` and `height` parameters. If the given image is larger, it will be down-scaled and cropped (to center) to fit into the given dimensions.
-
-Unlike `object-fit: cover`, this library won't upscale images that are smaller than the given dimensions. It does, however, make sure to crop smaller images into the correct aspect ratio.
+A Java AWT based image scaling library that is inspired by <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit?retiredLocale=de">CSS `object-fit`</a> scaling modes. This library allows to scale images in `cover`, `contain` and `fill` modes, where `cover` mode is the noteworthy feature.
 
 Additionally, this library automatically handles image rotation from JPEG Exif data if available.
 
-_Cover_ is well suited for thumbnail generation but works just as well with larger images.
+_object-fit_ is well suited for thumbnail generation but works just as well with larger images.
 
 ## Installation
 
 ### sbt
 
 ```sbt
-libraryDependencies += "io.taig" % "cover" % "x.y.z"
+libraryDependencies += "io.taig" % "object-fit" % "x.y.z"
 ```
 
 ### Maven
@@ -27,7 +23,7 @@ libraryDependencies += "io.taig" % "cover" % "x.y.z"
 ```xml
 <dependency>
   <groupId>io.taig</groupId>
-  <artifactId>cover</artifactId>
+  <artifactId>object-fit</artifactId>
   <version>x.y.z</version>
 </dependency>
 ```
@@ -35,5 +31,162 @@ libraryDependencies += "io.taig" % "cover" % "x.y.z"
 ### Gradle
 
 ```groovy
-implementation("io.taig:cover:x.y.z")
+implementation("io.taig:object-fit:x.y.z")
 ```
+
+## Samples
+
+### Cover
+
+```scala
+ObjectFit.options()
+  .mode(ObjectFit.Mode.COVER)
+  .size(250, 150)
+  .format("webp")
+```
+
+<table>
+  <tr>
+    <th>Input</th>
+    <th>Output</th>
+  </tr>
+  <tr>
+    <td><img src="/modules/samples/src/main/resources/otter.1.jpg" /></td>
+    <td><img src="/modules/samples/src/main/resources/otter.1.1.result.webp" /></td>
+  </tr>
+  <tr>
+    <td><img src="/modules/samples/src/main/resources/otter.2.jpg" /></td>
+    <td><img src="/modules/samples/src/main/resources/otter.1.2.result.webp" /></td>
+  </tr>
+  <tr>
+    <td><img src="/modules/samples/src/main/resources/otter.3.jpg" /></td>
+    <td><img src="/modules/samples/src/main/resources/otter.1.3.result.webp" /></td>
+  </tr>
+</table>
+
+<hr />
+
+```scala
+ObjectFit.options()
+  .mode(ObjectFit.Mode.COVER)
+  .size(250, 150)
+  .format("webp")
+  .scaleUp()
+  ```
+
+<table>
+  <tr>
+    <th>Input</th>
+    <th>Output</th>
+  </tr>
+  <tr>
+    <td><img src="/modules/samples/src/main/resources/otter.3.jpg" /></td>
+    <td><img src="/modules/samples/src/main/resources/otter.2.3.result.webp" /></td>
+  </tr>
+</table>
+
+### Fill
+
+```scala
+ObjectFit.options()
+  .mode(ObjectFit.Mode.FILL)
+  .size(250, 250)
+  .format("png")
+```
+
+<table>
+  <tr>
+    <th>Input</th>
+    <th>Output</th>
+  </tr>
+  <tr>
+    <td><img src="/modules/samples/src/main/resources/otter.1.jpg" /></td>
+    <td><img src="/modules/samples/src/main/resources/otter.3.1.result.png" /></td>
+  </tr>
+  <tr>
+    <td><img src="/modules/samples/src/main/resources/otter.2.jpg" /></td>
+    <td><img src="/modules/samples/src/main/resources/otter.3.2.result.png" /></td>
+  </tr>
+  <tr>
+    <td><img src="/modules/samples/src/main/resources/otter.3.jpg" /></td>
+    <td><img src="/modules/samples/src/main/resources/otter.3.3.result.png" /></td>
+  </tr>
+</table>
+
+<hr />
+
+```scala
+ObjectFit.options()
+  .mode(ObjectFit.Mode.FILL)
+  .size(250, 250)
+  .format("png")
+  .scaleUp()
+```
+
+<table>
+  <tr>
+    <th>Input</th>
+    <th>Output</th>
+  </tr>
+  <tr>
+    <td><img src="/modules/samples/src/main/resources/otter.3.jpg" /></td>
+    <td><img src="/modules/samples/src/main/resources/otter.4.3.result.png" /></td>
+  </tr>
+</table>
+
+### Contain
+
+```scala
+ObjectFit.options()
+  .mode(ObjectFit.Mode.CONTAIN)
+  .size(250, 250)
+  .format("jpg")
+```
+
+<table>
+  <tr>
+    <th>Input</th>
+    <th>Output</th>
+  </tr>
+  <tr>
+    <td><img src="/modules/samples/src/main/resources/otter.1.jpg" /></td>
+    <td><img src="/modules/samples/src/main/resources/otter.5.1.result.jpg" /></td>
+  </tr>
+  <tr>
+    <td><img src="/modules/samples/src/main/resources/otter.2.jpg" /></td>
+    <td><img src="/modules/samples/src/main/resources/otter.5.2.result.jpg" /></td>
+  </tr>
+  <tr>
+    <td><img src="/modules/samples/src/main/resources/otter.3.jpg" /></td>
+    <td><img src="/modules/samples/src/main/resources/otter.5.3.result.jpg" /></td>
+  </tr>
+</table>
+
+<hr />
+
+```scala
+ObjectFit.options()
+  .mode(ObjectFit.Mode.CONTAIN)
+  .size(400, 500)
+  .format("jpg")
+  .scaleUp()
+```
+
+<table>
+  <tr>
+    <th>Input</th>
+    <th>Output</th>
+  </tr>
+  <tr>
+    <td><img src="/modules/samples/src/main/resources/otter.1.jpg" /></td>
+    <td><img src="/modules/samples/src/main/resources/otter.6.1.result.jpg" /></td>
+  </tr>
+  <tr>
+    <td><img src="/modules/samples/src/main/resources/otter.2.jpg" /></td>
+    <td><img src="/modules/samples/src/main/resources/otter.6.2.result.jpg" /></td>
+  </tr>
+  <tr>
+    <td><img src="/modules/samples/src/main/resources/otter.3.jpg" /></td>
+    <td><img src="/modules/samples/src/main/resources/otter.6.3.result.jpg" /></td>
+  </tr>
+</table>
