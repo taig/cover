@@ -11,7 +11,7 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
 class Awts {
-  static BufferedImage cover(BufferedImage image, int width, int height, int imageType) {
+  static BufferedImage cover(BufferedImage image, int width, int height, int imageType, boolean scaleUp) {
     final int sourceWidth = image.getWidth();
     final int sourceHeight = image.getHeight();
 
@@ -42,7 +42,7 @@ class Awts {
     int scaledHeight;
     Image scaledImage;
 
-    if(croppedWidth <= width && croppedHeight <= height) {
+    if(!scaleUp && croppedWidth <= width && croppedHeight <= height) {
       scaledWidth = croppedWidth;
       scaledHeight = croppedHeight;
       scaledImage = croppedImage;

@@ -6,30 +6,28 @@ import io.taig.objectfit.ObjectFit
 import java.io.File
 
 object Samples extends IOApp.Simple:
-  override def run: IO[Unit] = otter1 *> otter2 *> otter3
+  override def run: IO[Unit] =
+    IO(System.setProperty("java.awt.headless", "true")) *>
+    one("/otter.1.jpg", "otter-1.1.result.webp") *>
+    one("/otter.2.jpg", "otter.1.2.result.webp") *>
+    one("/otter.3.jpg", "otter.1.3.result.webp") *>
+    two("/otter.3.jpg", "otter.2.1.result.webp")
 
   def target(name: String): File = new File(s"./modules/samples/src/main/resources/$name")
 
-  val otter1: IO[Unit] = IO.blocking {
-    ObjectFit.of(getClass.getResourceAsStream("/otter-1.jpg"))
+  def one(source: String, destination: String): IO[Unit] = IO.blocking {
+    ObjectFit.of(getClass.getResourceAsStream(source))
       .mode(ObjectFit.Mode.COVER)
       .size(250, 150)
       .format("webp")
-      .write(target("otter-1.result.webp"))
+      .write(target(destination))
   }
 
-  val otter2: IO[Unit] = IO.blocking {
-    ObjectFit.of(getClass.getResourceAsStream("/otter-2.jpg"))
+  def two(source: String, destination: String): IO[Unit] = IO.blocking {
+    ObjectFit.of(getClass.getResourceAsStream(source))
       .mode(ObjectFit.Mode.COVER)
-      .size(250, 150)
+      .size(250, 250)
       .format("webp")
-      .write(target("otter-2.result.webp"))
-  }
-
-  val otter3: IO[Unit] = IO.blocking {
-    ObjectFit.of(getClass.getResourceAsStream("/otter-3.jpg"))
-      .mode(ObjectFit.Mode.COVER)
-      .size(250, 150)
-      .format("webp")
-      .write(target("otter-3.result.webp"))
+      .scaleUp()
+      .write(target(destination))
   }

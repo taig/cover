@@ -53,15 +53,34 @@ ObjectFit.of(...)
     <th>Output</th>
   </tr>
   <tr>
-    <td><img src="/modules/samples/src/main/resources/otter-1.jpg" /></td>
-    <td><img src="/modules/samples/src/main/resources/otter-1.result.webp" /></td>
+    <td><img src="/modules/samples/src/main/resources/otter.1.jpg" /></td>
+    <td><img src="/modules/samples/src/main/resources/otter.1.1.result.webp" /></td>
   </tr>
   <tr>
-    <td><img src="/modules/samples/src/main/resources/otter-2.jpg" /></td>
-    <td><img src="/modules/samples/src/main/resources/otter-2.result.webp" /></td>
+    <td><img src="/modules/samples/src/main/resources/otter.2.jpg" /></td>
+    <td><img src="/modules/samples/src/main/resources/otter.1.2.result.webp" /></td>
   </tr>
   <tr>
-    <td><img src="/modules/samples/src/main/resources/otter-3.jpg" /></td>
-    <td><img src="/modules/samples/src/main/resources/otter-3.result.webp" /></td>
+    <td><img src="/modules/samples/src/main/resources/otter.3.jpg" /></td>
+    <td><img src="/modules/samples/src/main/resources/otter.1.3.result.webp" /></td>
+  </tr>
+</table>
+
+```scala
+ObjectFit.of(...)
+  .mode(ObjectFit.Mode.COVER)
+  .size(250, 250)
+  .format("webp")
+  .scaleUp()
+  ```
+
+<table>
+  <tr>
+    <th>Input</th>
+    <th>Output</th>
+  </tr>
+  <tr>
+    <td><img src="/modules/samples/src/main/resources/otter.3.jpg" /></td>
+    <td><img src="/modules/samples/src/main/resources/otter.2.1.result.webp" /></td>
   </tr>
 </table>

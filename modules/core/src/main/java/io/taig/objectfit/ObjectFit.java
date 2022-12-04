@@ -119,7 +119,7 @@ public class ObjectFit {
 
     switch (mode) {
       case CONTAIN: throw new UnsupportedOperationException();
-      case COVER: return Awts.cover(rotatedImage, width, height, imageType);
+      case COVER: return Awts.cover(rotatedImage, width, height, imageType, scaleUp);
       default: throw new UnsupportedOperationException();
     }
   }
