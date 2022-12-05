@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.3
+
+_2022-12-05_
+
+* Improve MetadataInputStream performance
+
 ## 0.1.2
 
 _2022-12-04_
