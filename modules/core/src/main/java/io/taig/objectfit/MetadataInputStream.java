@@ -11,13 +11,9 @@ import java.io.*;
  * byte while only buffering the metadata related bytes
  */
 public class MetadataInputStream extends InputStream {
-  private final ByteArrayOutputStream marker = new ByteArrayOutputStream(4);
-
-  private final ByteArrayOutputStream metadata = new ByteArrayOutputStream(512);
-
   private final InputStream underlying;
 
-  private InputStream result;
+  private volatile InputStream result;
 
   public MetadataInputStream(InputStream input) {
     this.underlying = input;
@@ -28,11 +24,13 @@ public class MetadataInputStream extends InputStream {
       throw new IllegalStateException("Stream already consumed");
     }
 
+    final ByteArrayOutputStream markerBuffer = new ByteArrayOutputStream(4);
+
     final InputStream markerInput = new InputStream() {
       @Override
       public int read() throws IOException {
         int data = underlying.read();
-        marker.write(data);
+        markerBuffer.write(data);
         return data;
       }
     };
@@ -40,40 +38,93 @@ public class MetadataInputStream extends InputStream {
     final int marker = new DataInputStream(markerInput).readInt();
 
     // https://stackoverflow.com/a/15539831/1493269
-    if(marker != 0xffd8ffe0) return null;
+    if(marker != 0xffd8ffe0) {
+      result = new SequenceInputStream(new ByteArrayInputStream(markerBuffer.toByteArray()), underlying);
+      return null;
+    }
+
+    final ByteArrayOutputStream metadataBuffer = new ByteArrayOutputStream(512);
 
     final InputStream metadataInput = new InputStream() {
       @Override
       public int read() throws IOException {
         int data = underlying.read();
-        metadata.write(data);
+        metadataBuffer.write(data);
         return data;
       }
     };
 
-    return ImageMetadataReader.readMetadata(
-      new SequenceInputStream(new ByteArrayInputStream(this.marker.toByteArray()), metadataInput)
-    );
+    try {
+      return ImageMetadataReader.readMetadata(
+        new SequenceInputStream(new ByteArrayInputStream(markerBuffer.toByteArray()), metadataInput)
+      );
+    } finally {
+      result = new SequenceInputStream(
+        new SequenceInputStream(
+          new ByteArrayInputStream(markerBuffer.toByteArray()),
+          new ByteArrayInputStream(metadataBuffer.toByteArray())
+        ),
+        underlying
+      );
+    }
   }
 
   @Override
   public int read() throws IOException {
     if(result == null) {
-      result = new SequenceInputStream(
-        new SequenceInputStream(
-          new ByteArrayInputStream(marker.toByteArray()),
-          new ByteArrayInputStream(metadata.toByteArray())
-        ),
-        underlying
-      );
+      throw new IllegalStateException("getJpegMetadata has not been called");
     }
 
     return result.read();
   }
 
   @Override
+  public int read(byte[] b) throws IOException {
+    if(result == null) {
+      throw new IllegalStateException("getJpegMetadata has not been called");
+    }
+
+    return result.read(b);
+  }
+
+  @Override
+  public int read(byte[] b, int off, int len) throws IOException {
+    if(result == null) {
+      throw new IllegalStateException("getJpegMetadata has not been called");
+    }
+
+    return result.read(b, off, len);
+  }
+
+  @Override
+  public byte[] readAllBytes() throws IOException {
+    if(result == null) {
+      throw new IllegalStateException("getJpegMetadata has not been called");
+    }
+
+    return result.readAllBytes();
+  }
+
+  @Override
+  public byte[] readNBytes(int len) throws IOException {
+    if(result == null) {
+      throw new IllegalStateException("getJpegMetadata has not been called");
+    }
+
+    return result.readNBytes(len);
+  }
+
+  @Override
+  public int readNBytes(byte[] b, int off, int len) throws IOException {
+    if(result == null) {
+      throw new IllegalStateException("getJpegMetadata has not been called");
+    }
+
+    return result.readNBytes(b, off, len);
+  }
+
+  @Override
   public void close() throws IOException {
-    super.close();
     underlying.close();
   }
 }
